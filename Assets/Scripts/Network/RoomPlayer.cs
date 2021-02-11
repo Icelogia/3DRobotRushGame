@@ -2,6 +2,7 @@
 using Mirror;
 using MainMenu;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RoomPlayer : NetworkRoomPlayer
 {
@@ -22,7 +23,6 @@ public class RoomPlayer : NetworkRoomPlayer
     private void OnEnable()
     {
         LobbyMenu.HandleChangeReady += CmdReadyUp;
-        Debug.Log(1);
     }
 
     private void OnDestroy()
@@ -30,16 +30,22 @@ public class RoomPlayer : NetworkRoomPlayer
         LobbyMenu.HandleChangeReady -= CmdReadyUp;
     }
 
+    public override void OnStopClient()
+    {
+        if (this.hasAuthority)
+        {
+            SceneManager.LoadScene("Main_Menu");
+        }
+
+        base.OnStopClient();
+
+    }
+
     public override void OnClientEnterRoom()
     {
         base.OnClientEnterRoom();
         SetPlayerName();
 
-        if (this.hasAuthority)
-        {
-            if (!Room.roomPlayers.Contains(this))
-                Room.roomPlayers.Add(this);
-        }
 
         var lobbyPanel = GameObject.FindGameObjectWithTag("Lobby Panel");
         if (lobbyPanel)

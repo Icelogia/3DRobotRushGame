@@ -14,7 +14,10 @@ public class LobbyMenu : NetworkBehaviour
 
     public void LeaveLobby()
     {
-
+        if(isServer)
+            RobotRushNetworkManager.singleton.StopHost();
+        else
+            RobotRushNetworkManager.singleton.StopClient();
     }
 
     [Client]

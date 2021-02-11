@@ -9,8 +9,6 @@ public class RobotRushNetworkManager : NetworkRoomManager
     private bool isGameInProgress = false;
 
     public List<Player> players { get; } = new List<Player>();
-    public List<RoomPlayer> roomPlayers { get; } = new List<RoomPlayer>();
-
 
     #region Server
     public override void OnServerConnect(NetworkConnection conn)
@@ -20,8 +18,17 @@ public class RobotRushNetworkManager : NetworkRoomManager
         conn.Disconnect();
     }
 
-    
-    #endregion
+    public override void OnStopHost()
+    {
+        players.Clear();
 
+        base.OnStopServer();
+    }
+
+    public override void OnStartHost()
+    {
+
+    }
+    #endregion
 
 }
