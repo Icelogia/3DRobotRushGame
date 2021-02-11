@@ -18,6 +18,18 @@ public class RoomPlayer : NetworkRoomPlayer
     public string playerName = "Player";
     [SyncVar]
     private bool isReady = false;
+
+    private void OnEnable()
+    {
+        LobbyMenu.HandleChangeReady += CmdReadyUp;
+        Debug.Log(1);
+    }
+
+    private void OnDestroy()
+    {
+        LobbyMenu.HandleChangeReady -= CmdReadyUp;
+    }
+
     public override void OnClientEnterRoom()
     {
         base.OnClientEnterRoom();
@@ -41,35 +53,38 @@ public class RoomPlayer : NetworkRoomPlayer
     }
 
     [Client]
-    void SetPlayerName()
+    private void SetPlayerName()
     {
         playerName = PlayerNameInput.Nick;
         CmdSendNameToServer(playerName);
     }
 
     [Command]
-    void CmdSendNameToServer(string nameToSend)
+    private void CmdSendNameToServer(string nameToSend)
     {
         RpcSetPlayerName(nameToSend);
     }
 
     [ClientRpc]
-    void RpcSetPlayerName(string name)
+    private void RpcSetPlayerName(string name)
     {
         gameObject.GetComponentInChildren<Text>().text = name;
     }
 
     [Command]
-    public void CmdReadyUp()
+    private void CmdReadyUp()
     {
         isReady = !isReady;
-        Debug.Log(isReady);
+        Toggle readyToggle = this.gameObject.GetComponentInChildren<Toggle>();
+        readyToggle.isOn = isReady;
         RpcSetReady(isReady);
     }
 
     [ClientRpc]
-    void RpcSetReady(bool isReady)
+    private void RpcSetReady(bool isReady)
     {
+        Toggle readyToggle = this.gameObject.GetComponentInChildren<Toggle>();
+        readyToggle.isOn = isReady;
         this.readyToBegin = isReady;
     }
 }

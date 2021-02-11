@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using System;
 
-public class LobbyMenu : MonoBehaviour
+public class LobbyMenu : NetworkBehaviour
 {
+    public static event Action HandleChangeReady;
 
     public void StartGame()
     {
@@ -14,6 +15,12 @@ public class LobbyMenu : MonoBehaviour
     public void LeaveLobby()
     {
 
+    }
+
+    [Client]
+    public void SetReady()
+    {
+        HandleChangeReady?.Invoke();
     }
 
 }
