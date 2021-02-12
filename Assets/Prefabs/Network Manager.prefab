@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 938357360507830340}
   - component: {fileID: 938357360507830338}
   - component: {fileID: 938357360507830341}
+  - component: {fileID: 616879633}
+  - component: {fileID: 616879634}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -65,6 +67,8 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 7183494400086091972, guid: c3a7ced7f1806ac4a8666756df7c7a4c, type: 3}
   - {fileID: 5131378748824570248, guid: c5ceb0642b69ec540981f0bbb68a5c47, type: 3}
+  - {fileID: 2108133639109851890, guid: d26e95eee2aebbe4fad47dbf0fddf46e, type: 3}
+  - {fileID: 7421195301096720625, guid: ac7d01adac8922040b4e708b4cd3a434, type: 3}
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 5743123385339802553, guid: c3a7ced7f1806ac4a8666756df7c7a4c, type: 3}
@@ -95,3 +99,47 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
+--- !u!114 &616879633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938357360507830343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88c37d3deca7a834d80cfd8d3cfcc510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkDiscovery: {fileID: 616879634}
+--- !u!114 &616879634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938357360507830343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c761308e733c51245b2e8bb4201f46dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  secretHandshake: 7253741496301108288
+  serverBroadcastListenPort: 47777
+  ActiveDiscoveryInterval: 3
+  transport: {fileID: 0}
+  OnServerFound:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 616879633}
+        m_TargetAssemblyTypeName: Mirror.Discovery.NetworkDiscoveryHUD, Mirror.Components
+        m_MethodName: OnDiscoveredServer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

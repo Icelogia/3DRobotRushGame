@@ -32,7 +32,7 @@ public class RoomPlayer : NetworkRoomPlayer
 
     public override void OnStopClient()
     {
-        if (this.hasAuthority)
+        if (this.hasAuthority && SceneManager.GetActiveScene().Equals("Lobby"))
         {
             SceneManager.LoadScene("Main_Menu");
         }

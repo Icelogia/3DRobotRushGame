@@ -1,29 +1,31 @@
-﻿using UnityEngine;
+﻿using UnityEngine.SceneManagement;
 using Mirror;
-using UnityEngine.UI;
 using System;
 
-public class LobbyMenu : NetworkBehaviour
+namespace MainMenu
 {
-    public static event Action HandleChangeReady;
-
-    public void StartGame()
+    public class LobbyMenu : NetworkBehaviour
     {
+        public static event Action HandleChangeReady;
+
+        public void StartGame()
+        {
+            RobotRushNetworkManager.singleton.ServerChangeScene("Game_Scene_01");
+        }
+
+        public void LeaveLobby()
+        {
+            if (isServer)
+                RobotRushNetworkManager.singleton.StopHost();
+            else
+                RobotRushNetworkManager.singleton.StopClient();
+        }
+
+        [Client]
+        public void SetReady()
+        {
+            HandleChangeReady?.Invoke();
+        }
 
     }
-
-    public void LeaveLobby()
-    {
-        if(isServer)
-            RobotRushNetworkManager.singleton.StopHost();
-        else
-            RobotRushNetworkManager.singleton.StopClient();
-    }
-
-    [Client]
-    public void SetReady()
-    {
-        HandleChangeReady?.Invoke();
-    }
-
 }
