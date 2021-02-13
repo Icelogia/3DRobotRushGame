@@ -1,9 +1,21 @@
 ﻿using UnityEngine;
 using Mirror;
-using MainMenu;
 using System;
 
 public class Player : NetworkBehaviour
 {
-   
+    
+    [SyncVar]
+    [SerializeField] private int maxEnergy = 100;
+    [SyncVar]
+    private int currentEnergy;
+
+    
+
+    private Camera mainCamera;
+    
+
+    
+
+    
 }

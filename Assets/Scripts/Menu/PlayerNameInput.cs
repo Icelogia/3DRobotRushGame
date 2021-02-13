@@ -6,7 +6,7 @@ namespace MainMenu
     public class PlayerNameInput : MonoBehaviour
     {
         [SerializeField] private InputField nameInputField = null;
-        private const string playerDefaultName = "Player Name";
+        private string playerDefaultName = "Player Name";
         [SerializeField] private Button hostButton = null;
         [SerializeField] private Button joinButton = null;
 

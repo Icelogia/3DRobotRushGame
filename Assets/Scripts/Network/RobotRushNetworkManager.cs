@@ -25,9 +25,9 @@ public class RobotRushNetworkManager : NetworkRoomManager
         base.OnStopServer();
     }
 
-    public override void OnStartHost()
+    public override void OnRoomServerSceneChanged(string sceneName)
     {
-
+        base.OnRoomServerSceneChanged(sceneName);
     }
     #endregion
 
