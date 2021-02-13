@@ -4,7 +4,10 @@ using System.Collections.Generic;
 
 public class PlatformController : NetworkBehaviour
 {
+    [Header("Platforms")]
     [SerializeField] private Animator[] platformsAnimator = null;
+
+    [Header("Parametres")]
     [SerializeField] private float timeBtwPlatformsFalling = 0;
     private float currentTime = 0;
 
