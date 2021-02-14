@@ -15,18 +15,27 @@ public class RoomPlayer : NetworkRoomPlayer
             return room = NetworkRoomManager.singleton as RobotRushNetworkManager;
         }
     }
+
+    [Header("Player parametres")]
+    [SerializeField] private Image colorImage = null;
+    [SyncVar]
+    private Color playerColor = Color.red;
+
     [SyncVar]
     public string playerName = "Player";
     [SyncVar]
     private bool isReady = false;
+    
 
     private void OnEnable()
     {
+        ColorSetting.HandleChangeColor += CmdChangeColor;
         LobbyMenu.HandleChangeReady += CmdReadyUp;
     }
 
     private void OnDestroy()
     {
+        ColorSetting.HandleChangeColor -= CmdChangeColor;
         LobbyMenu.HandleChangeReady -= CmdReadyUp;
     }
 
@@ -56,6 +65,15 @@ public class RoomPlayer : NetworkRoomPlayer
         {
             Debug.LogError("There is no lobby panel on scene or there is problem with lobbyPanel tag!");
         }
+    }
+
+    [Client]
+    public void OpenColorPanel()
+    {
+        if(!hasAuthority) { return; }
+
+        var colorSetting = FindObjectOfType<ColorSetting>();
+        colorSetting.OpenColorPanel();
     }
 
     [Client]
@@ -93,4 +111,21 @@ public class RoomPlayer : NetworkRoomPlayer
         readyToggle.isOn = isReady;
         this.readyToBegin = isReady;
     }
+
+    [Command]
+    private void CmdChangeColor(Color color)
+    {
+        playerColor = color;
+        colorImage.color = playerColor;
+        RpcChangeColor(color);
+    }
+
+    [ClientRpc]
+    private void RpcChangeColor(Color color)
+    {
+        playerColor = color;
+        colorImage.color = playerColor;
+    }
+
+    
 }

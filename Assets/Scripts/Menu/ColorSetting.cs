@@ -1,18 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System;
 
 public class ColorSetting : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Color[] colors;
+    [SerializeField] private GameObject colorPanel = null;
+    private Color color;
+
+    public static event Action<Color> HandleChangeColor;
+    public void OpenColorPanel()
     {
-        
+        colorPanel.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CloseColorPanel()
     {
-        
+        colorPanel.SetActive(false);
+    }
+
+    public void SetColor(int colorIndex)
+    {
+        this.color = colors[colorIndex];
+        HandleChangeColor?.Invoke(color);
+        CloseColorPanel();
     }
 }

@@ -1,5 +1,4 @@
-﻿using UnityEngine.SceneManagement;
-using Mirror;
+﻿using Mirror;
 using System;
 
 namespace MainMenu
