@@ -1,11 +1,12 @@
-﻿using Mirror;
+﻿using UnityEngine;
+using Mirror;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class RobotRushNetworkManager : NetworkRoomManager
 {
     private bool isGameInProgress = false;
-
-    public List<Player> players { get; } = new List<Player>();
+    public Color playersColor;
 
     #region Server
     public override void OnServerConnect(NetworkConnection conn)
@@ -15,17 +16,19 @@ public class RobotRushNetworkManager : NetworkRoomManager
         conn.Disconnect();
     }
 
-    public override void OnStopHost()
+    public override void OnServerChangeScene(string newSceneName)
     {
-        players.Clear();
-
-        base.OnStopServer();
+        if(newSceneName == this.GameplayScene)
+        {
+            isGameInProgress = true;
+        }
+        else
+        {
+            isGameInProgress = false;
+        }
+        base.OnServerChangeScene(newSceneName);
     }
 
-    public override void OnRoomServerSceneChanged(string sceneName)
-    {
-        base.OnRoomServerSceneChanged(sceneName);
-    }
     #endregion
 
 }

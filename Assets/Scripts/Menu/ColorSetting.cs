@@ -8,6 +8,12 @@ public class ColorSetting : MonoBehaviour
     private Color color;
 
     public static event Action<Color> HandleChangeColor;
+
+    private void Awake()
+    {
+        color = colors[0];
+    }
+
     public void OpenColorPanel()
     {
         colorPanel.SetActive(true);
@@ -20,8 +26,11 @@ public class ColorSetting : MonoBehaviour
 
     public void SetColor(int colorIndex)
     {
-        this.color = colors[colorIndex];
+        color = colors[colorIndex];
         HandleChangeColor?.Invoke(color);
         CloseColorPanel();
+
+        var networkManager = FindObjectOfType<RobotRushNetworkManager>();
+        networkManager.playersColor = color;
     }
 }

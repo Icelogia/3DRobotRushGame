@@ -30,11 +30,11 @@ public class Movement : NetworkBehaviour
     [Client]
     private void Move(float verticalMovement, float rotationMovement)
     {
-        var movement = movementDirection.forward.normalized * verticalMovement;
-        movement *= speedMultiplier * movementSpeed * Time.deltaTime;
+        var movement = movementDirection.forward.normalized * verticalMovement * 
+            speedMultiplier * movementSpeed * Time.deltaTime;
 
         movement = new Vector3(movement.x, rb.velocity.y, movement.z);
-        trans.position += movement;
+        rb.velocity = movement;
 
         var angle = new Vector3(0.0f, rotationMovement * rotationSpeed);
         trans.Rotate(angle  * speedMultiplier * Time.deltaTime);

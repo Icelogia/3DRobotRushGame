@@ -18,6 +18,7 @@ public class RoomPlayer : NetworkRoomPlayer
 
     [Header("Player parametres")]
     [SerializeField] private Image colorImage = null;
+
     [SyncVar]
     private Color playerColor = Color.red;
 
@@ -25,7 +26,6 @@ public class RoomPlayer : NetworkRoomPlayer
     public string playerName = "Player";
     [SyncVar]
     private bool isReady = false;
-    
 
     private void OnEnable()
     {
