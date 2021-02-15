@@ -1,19 +1,28 @@
 ﻿using UnityEngine;
 using Mirror;
-using System;
+using System.Collections;
 
 public class Player : NetworkBehaviour
 {
 
     [SerializeField] private Renderer playersMesh;
-    [SyncVar]
-    [SerializeField] private Color playerColor;
 
-    [ClientCallback]
+    [SyncVar]
+    private Color playerColor;
+
+
     private void Start()
     {
-        var networkManager = FindObjectOfType<RobotRushNetworkManager>();
-        playerColor = networkManager.playersColor;
+        if(!hasAuthority) { return; }
+        StartCoroutine("SetColor");//Waiting for all players to join game scene
+        
+    }
+
+    [Client]
+    private IEnumerator SetColor()
+    {
+        yield return new WaitForSeconds(3);
+        playerColor = ColorSetting.color;
         playersMesh.material.color = playerColor;
         CmdSetColorOnPlayer(playerColor);
     }
@@ -22,15 +31,15 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdSetColorOnPlayer(Color color)
     {
-        if (isLocalPlayer)
-            playersMesh.material.color = color;
+        playersMesh.material.color = color;
         RpcSetColorOnPlayer(color);
     }
 
     [ClientRpc]
     public void RpcSetColorOnPlayer(Color color)
     {
-            playersMesh.material.color = color;
+        Debug.Log(color);
+        playersMesh.material.color = color;
     }
 
 

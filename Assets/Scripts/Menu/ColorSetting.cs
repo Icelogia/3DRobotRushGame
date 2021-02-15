@@ -5,7 +5,7 @@ public class ColorSetting : MonoBehaviour
 {
     [SerializeField] private Color[] colors;
     [SerializeField] private GameObject colorPanel = null;
-    private Color color;
+    public static Color color { get; private set; }
 
     public static event Action<Color> HandleChangeColor;
 
@@ -29,8 +29,5 @@ public class ColorSetting : MonoBehaviour
         color = colors[colorIndex];
         HandleChangeColor?.Invoke(color);
         CloseColorPanel();
-
-        var networkManager = FindObjectOfType<RobotRushNetworkManager>();
-        networkManager.playersColor = color;
     }
 }

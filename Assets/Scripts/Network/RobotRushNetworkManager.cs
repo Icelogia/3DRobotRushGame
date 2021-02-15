@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class RobotRushNetworkManager : NetworkRoomManager
 {
     private bool isGameInProgress = false;
-    public Color playersColor;
+
+    
 
     #region Server
     public override void OnServerConnect(NetworkConnection conn)
@@ -18,7 +19,7 @@ public class RobotRushNetworkManager : NetworkRoomManager
 
     public override void OnServerChangeScene(string newSceneName)
     {
-        if(newSceneName == this.GameplayScene)
+        if (newSceneName.Equals("Game_Scene_01"))
         {
             isGameInProgress = true;
         }
@@ -26,8 +27,12 @@ public class RobotRushNetworkManager : NetworkRoomManager
         {
             isGameInProgress = false;
         }
+
+        
+
         base.OnServerChangeScene(newSceneName);
     }
+
 
     #endregion
 

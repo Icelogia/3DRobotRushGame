@@ -27,6 +27,11 @@ public class RoomPlayer : NetworkRoomPlayer
     [SyncVar]
     private bool isReady = false;
 
+    public Color GetColor()
+    {
+        return playerColor;
+    }
+
     private void OnEnable()
     {
         ColorSetting.HandleChangeColor += CmdChangeColor;
