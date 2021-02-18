@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using Mirror;
 using System.Collections;
+using Cinemachine;
 
 public class Player : NetworkBehaviour
 {
+
+    private CinemachineVirtualCamera mainCamera = null;
 
     [SerializeField] private Renderer playersMesh;
 
@@ -14,14 +17,23 @@ public class Player : NetworkBehaviour
     private void Start()
     {
         if(!hasAuthority) { return; }
-        StartCoroutine("SetColor");//Waiting for all players to join game scene
-        
+
+        StartCoroutine("SetColor");//Waiting for all players to join game scene to set colors
+        SetCamera();
+    }
+
+    [Client]
+    private void SetCamera()
+    {
+        mainCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        mainCamera.Follow = this.transform;
+        mainCamera.LookAt = this.transform;
     }
 
     [Client]
     private IEnumerator SetColor()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         playerColor = ColorSetting.color;
         playersMesh.material.color = playerColor;
         CmdSetColorOnPlayer(playerColor);
@@ -38,7 +50,6 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     public void RpcSetColorOnPlayer(Color color)
     {
-        Debug.Log(color);
         playersMesh.material.color = color;
     }
 
