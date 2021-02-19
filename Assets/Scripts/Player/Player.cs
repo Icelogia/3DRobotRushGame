@@ -5,7 +5,6 @@ using Cinemachine;
 
 public class Player : NetworkBehaviour
 {
-
     private CinemachineVirtualCamera mainCamera = null;
 
     [SerializeField] private Renderer playersMesh;

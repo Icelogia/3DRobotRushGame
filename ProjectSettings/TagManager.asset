@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Lobby Panel
+  - HP Slider
   layers:
   - Default
   - TransparentFX
