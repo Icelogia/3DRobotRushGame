@@ -62,8 +62,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  gizmosOn: 1
   orbsPrefabs:
   - {fileID: 3351665734098727847, guid: 7ed8cd3886be492479661d1376b39364, type: 3}
+  - {fileID: 3351665734098727847, guid: 30450270b043f5d42abd67f1a8216904, type: 3}
   radius: 1
-  amountOfOrbsAtOneTime: 0
+  amountOfOrbsAtOneSpawn: 1
   timeBtwSpawningOrbs: 5

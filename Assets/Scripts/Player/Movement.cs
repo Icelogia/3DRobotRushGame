@@ -31,6 +31,7 @@ public class Movement : NetworkBehaviour
     [Client]
     private void Move(float verticalMovement, float rotationMovement)
     {
+        
         var movement = movementDirection.forward.normalized * verticalMovement *
             speedMultiplier * movementSpeed * Time.fixedDeltaTime;
 
@@ -38,7 +39,8 @@ public class Movement : NetworkBehaviour
         rb.velocity = movement;
 
         var angle = new Vector3(0.0f, rotationMovement * rotationSpeed);
-        trans.Rotate(angle  * speedMultiplier * Time.fixedDeltaTime);
+        trans.Rotate(angle * speedMultiplier * Time.fixedDeltaTime);
+        
     }
     #endregion
 

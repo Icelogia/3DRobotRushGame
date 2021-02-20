@@ -3,12 +3,47 @@ using Mirror;
 
 public class Abilities : NetworkBehaviour
 {
-    [SyncVar]
     [SerializeField] private GameObject effectPrefab = null;
 
     [SerializeField] private Health health = null;
 
-    [Server]
+    [ClientCallback]
+    private void Update()
+    {
+        if(!isLocalPlayer) { return; }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CmdUsingEffect();
+        }
+    }
+
+    [Command]
+    private void CmdUsingEffect()
+    {
+        if (effectPrefab)
+        {
+            var effect = Instantiate(effectPrefab, transform.position, transform.rotation);
+            effectPrefab = null;
+            NetworkServer.Spawn(effect);
+
+            RpcUsingEffect();
+        }
+    }
+
+    [ClientRpc]
+    private void RpcUsingEffect()
+    {
+        if (effectPrefab)
+        {
+            Instantiate(effectPrefab, transform.position, transform.rotation);
+            effectPrefab = null;
+        }
+    }
+
+    
+
+    [Client]
     public void SetEffectPrefab(GameObject prefab)
     {
         if (effectPrefab == null)

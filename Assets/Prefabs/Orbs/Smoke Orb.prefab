@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5985828801499135417}
   - component: {fileID: 3021315364875963374}
   m_Layer: 8
-  m_Name: Orb
+  m_Name: Smoke Orb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 400959ee8603b1841ae8637c5f265b2d, type: 2}
+  - {fileID: 2100000, guid: 79923205c380d4c489e9d467f30b9e26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  effectPrefab: {fileID: 0}
+  effectPrefab: {fileID: 8112012704907303777, guid: 1406b6ecd7b929a468ae62503538f6b4, type: 3}
   hpToRegenerate: 5
 --- !u!114 &3021315364875963374
 MonoBehaviour:

@@ -42,8 +42,8 @@ public class Health : NetworkBehaviour
         healthSlider.value = currentHealth / health;
     }
 
-    [Server]
-    public void IncreaseHealth(int hp)
+    [Command]
+    public void CmdIncreaseHealth(int hp)
     {
         float currentHP = currentHealth + hp;
         if(currentHP > health)
