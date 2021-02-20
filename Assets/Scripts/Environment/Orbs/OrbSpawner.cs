@@ -38,7 +38,7 @@ public class OrbSpawner : NetworkBehaviour
             float xPos = Random.Range(0, radius);
             float yPos = Random.Range(0, radius);
 
-            var orbObj = Instantiate(orbsPrefabs[orbIndex], new Vector3(xPos, 2, yPos), transform.rotation);
+            var orbObj = Instantiate(orbsPrefabs[orbIndex], new Vector3(xPos, 1, yPos), transform.rotation);
 
             NetworkServer.Spawn(orbObj);
         }

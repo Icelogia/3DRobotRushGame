@@ -39,8 +39,26 @@ public class Health : NetworkBehaviour
     [TargetRpc]
     private void UpdateSlider()
     {
-
         healthSlider.value = currentHealth / health;
     }
 
+    [Server]
+    public void IncreaseHealth(int hp)
+    {
+        float currentHP = currentHealth + hp;
+        if(currentHP > health)
+        {
+            currentHP = health;
+        }
+
+        currentHealth = currentHP;
+
+        RPCIncreaseHealth(currentHealth);
+    }
+
+    [ClientRpc]
+    private void RPCIncreaseHealth(float hp)
+    {
+        currentHealth = hp;
+    }
 }
