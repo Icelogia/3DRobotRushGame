@@ -70,9 +70,15 @@ MonoBehaviour:
   - {fileID: 2108133639109851890, guid: d26e95eee2aebbe4fad47dbf0fddf46e, type: 3}
   - {fileID: 7421195301096720625, guid: ac7d01adac8922040b4e708b4cd3a434, type: 3}
   - {fileID: 3483479420103039713, guid: eb02ebc180ea3724fae96e7511fba609, type: 3}
+  - {fileID: 8112012704907303777, guid: 1406b6ecd7b929a468ae62503538f6b4, type: 3}
+  - {fileID: 1980098820823944788, guid: a0829d1cbc07e034fb07eee846e08da7, type: 3}
+  - {fileID: 973784263829600347, guid: 45cf9f15c5da3114e9b3be917ec4ceec, type: 3}
+  - {fileID: 3914069198209465979, guid: 30a635d07674620408568e0d57a3e462, type: 3}
   - {fileID: 3351665734098727847, guid: 7ed8cd3886be492479661d1376b39364, type: 3}
   - {fileID: 3351665734098727847, guid: 30450270b043f5d42abd67f1a8216904, type: 3}
-  - {fileID: 8112012704907303777, guid: 1406b6ecd7b929a468ae62503538f6b4, type: 3}
+  - {fileID: 3351665734098727847, guid: 4d9d7bc648617ec42997ee5c5bef1dfe, type: 3}
+  - {fileID: 3351665734098727847, guid: c2cf9e1b8bc594744b88c936d498ce80, type: 3}
+  - {fileID: 3351665734098727847, guid: 1e672c5a6755a7c43abc4a1775fc812c, type: 3}
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 5743123385339802553, guid: c3a7ced7f1806ac4a8666756df7c7a4c, type: 3}

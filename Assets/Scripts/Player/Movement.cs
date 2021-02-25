@@ -31,16 +31,17 @@ public class Movement : NetworkBehaviour
     [Client]
     private void Move(float verticalMovement, float rotationMovement)
     {
-        
         var movement = movementDirection.forward.normalized * verticalMovement *
             speedMultiplier * movementSpeed * Time.fixedDeltaTime;
 
         movement = new Vector3(movement.x, rb.velocity.y, movement.z);
         rb.velocity = movement;
 
-        var angle = new Vector3(0.0f, rotationMovement * rotationSpeed);
-        trans.Rotate(angle * speedMultiplier * Time.fixedDeltaTime);
-        
+        if (Mathf.Abs(verticalMovement) > 0.1)
+        {
+            var angle = new Vector3(0.0f, rotationMovement * rotationSpeed);
+            trans.Rotate(angle * speedMultiplier * Time.fixedDeltaTime);
+        }  
     }
     #endregion
 
