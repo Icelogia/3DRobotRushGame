@@ -1,18 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class OilObstacle : MonoBehaviour
+public class OilObstacle : MovementObstacle
 {
-    // Start is called before the first frame update
-    void Start()
+    override protected void ChangeMovementOf(Movement player)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -25,25 +25,23 @@ public class Health : NetworkBehaviour
     {
         if(!hasAuthority) { return; }
 
-        CmdUpdateHealth();
-    }
-
-    [Command]
-    private void CmdUpdateHealth()
-    {
-        currentHealth -= Time.fixedDeltaTime;
-        
+        CmdDecreaseHealth();
         UpdateSlider();
     }
 
-    [TargetRpc]
+    [Command]
+    private void CmdDecreaseHealth()
+    {
+        currentHealth -= Time.fixedDeltaTime;
+    }
+
     private void UpdateSlider()
     {
         healthSlider.value = currentHealth / health;
     }
 
     [Command]
-    public void CmdIncreaseHealth(int hp)
+    public void CmdUpdateHealth(int hp)
     {
         float currentHP = currentHealth + hp;
         if(currentHP > health)
@@ -53,11 +51,11 @@ public class Health : NetworkBehaviour
 
         currentHealth = currentHP;
 
-        RPCIncreaseHealth(currentHealth);
+        RPCUpdateHealth(currentHealth);
     }
 
     [ClientRpc]
-    private void RPCIncreaseHealth(float hp)
+    private void RPCUpdateHealth(float hp)
     {
         currentHealth = hp;
     }

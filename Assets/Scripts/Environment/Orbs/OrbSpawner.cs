@@ -33,8 +33,8 @@ public class OrbSpawner : NetworkBehaviour
         {
             int orbIndex = Random.Range(0, orbsPrefabs.Length);
             
-            float xPos = Random.Range(0, radius);
-            float yPos = Random.Range(0, radius);
+            float xPos = Random.Range(-radius, radius);
+            float yPos = Random.Range(-radius, radius);
 
             var orbObj = Instantiate(orbsPrefabs[orbIndex], new Vector3(xPos, 1, yPos), transform.rotation);
 

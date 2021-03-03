@@ -34,8 +34,8 @@ public class Movement : NetworkBehaviour
         var movement = movementDirection.forward.normalized * verticalMovement *
             speedMultiplier * movementSpeed * Time.fixedDeltaTime;
 
-        movement = new Vector3(movement.x, rb.velocity.y, movement.z);
-        rb.velocity = movement;
+        movement = new Vector3(movement.x, 0, movement.z);
+        rb.AddForce(movement);
 
         if (Mathf.Abs(verticalMovement) > 0.1)
         {

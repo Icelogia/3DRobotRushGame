@@ -19,7 +19,7 @@ public class Orb : NetworkBehaviour
 
             Health health = player.GetComponent<Health>();
 
-            health.CmdIncreaseHealth(hpToRegenerate);
+            health.CmdUpdateHealth(hpToRegenerate);
 
             NetworkServer.Destroy(this.gameObject);
         }

@@ -1,18 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Mirror;
 
-public class ElectricObstacle : MonoBehaviour
+public class ElectricObstacle : DamageObstacle
 {
-    // Start is called before the first frame update
-    void Start()
+    [Server]
+    override protected void DealDamageTo(Health player)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        int dmg = -this.damage;//to decrease hp
+        player.CmdUpdateHealth(dmg);
     }
 }
