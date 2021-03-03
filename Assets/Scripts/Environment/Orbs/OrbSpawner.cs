@@ -3,8 +3,6 @@ using Mirror;
 
 public class OrbSpawner : NetworkBehaviour
 {
-    [SerializeField] private bool gizmosOn = true;
-
     [Header("Objects")]
     [SerializeField] private GameObject[] orbsPrefabs;
     [Header("Parametres")]
@@ -44,10 +42,8 @@ public class OrbSpawner : NetworkBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        if(!gizmosOn) { return; }
-
         Gizmos.color = new Color(255, 0, 0, 15);
         Gizmos.DrawSphere(centerPoint, radius);
     }
