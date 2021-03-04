@@ -132,8 +132,8 @@ MonoBehaviour:
   syncInterval: 0.1
   rb: {fileID: -1111222983037325459}
   trans: {fileID: 5131378748824570244}
-  movementSpeed: 6
-  rotationSpeed: 4
+  movementSpeed: 8
+  rotationSpeed: 0.8
   movementDirection: {fileID: 5131378747593921926}
 --- !u!114 &7730837511138342713
 MonoBehaviour:

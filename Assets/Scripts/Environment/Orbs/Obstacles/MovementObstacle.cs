@@ -2,11 +2,11 @@
 using Mirror;
 public class MovementObstacle : NetworkBehaviour, IObstacle
 {
-    [ClientRpc]
+    [Server]
     virtual protected void ChangeMovementOf(Movement player) { }
 
     [ServerCallback]
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         Movement player;
 

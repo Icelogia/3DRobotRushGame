@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Mirror;
+using System;
 
 public class Movement : NetworkBehaviour
 {
@@ -12,6 +13,9 @@ public class Movement : NetworkBehaviour
     [SyncVar]
     [SerializeField] private float rotationSpeed = 1;
 
+    private float verticalMovement;
+    private float rotationMovement;
+
     private const float speedMultiplier = 100;
 
     [SerializeField] private Transform movementDirection = null;
@@ -22,27 +26,55 @@ public class Movement : NetworkBehaviour
     {
         if (!hasAuthority) { return; }
 
-        float verticalMovement = Input.GetAxis("Vertical");
-        float rotationMovement = Input.GetAxis("Horizontal");
+        verticalMovement = Input.GetAxis("Vertical");
+        rotationMovement = Input.GetAxis("Horizontal");
         
-        Move(verticalMovement, rotationMovement);
+        Move(verticalMovement);
+        Rotate(rotationMovement);
     }
 
     [Client]
-    private void Move(float verticalMovement, float rotationMovement)
+    private void Rotate(float rotationMovement)
     {
-        var movement = movementDirection.forward.normalized * verticalMovement *
-            speedMultiplier * movementSpeed * Time.fixedDeltaTime;
-
-        movement = new Vector3(movement.x, 0, movement.z);
-        rb.AddForce(movement);
-
-        if (Mathf.Abs(verticalMovement) > 0.1)
+        if (Mathf.Abs(rb.velocity.x) > 0.4 || Mathf.Abs(rb.velocity.z) > 0.4)
         {
             var angle = new Vector3(0.0f, rotationMovement * rotationSpeed);
             trans.Rotate(angle * speedMultiplier * Time.fixedDeltaTime);
-        }  
+        }
     }
+
+    [Client]
+    private void Move(float verticalMovement)
+    {
+        var movement = MovementForce(verticalMovement);
+        rb.AddForce(movement);
+    }
+
+    [ClientRpc]
+    public void SlowDown(float slowDownForce)
+    {
+        if(!isLocalPlayer) { return; }
+
+        if (Mathf.Abs(rb.velocity.x) > 0.4 || Mathf.Abs(rb.velocity.z) > 0.4)
+        {
+            var movementAdditionalForce = MovementForce(-slowDownForce) * verticalMovement;
+
+            rb.AddForce(movementAdditionalForce);
+        }
+    }
+
+    [Client]
+    private Vector3 MovementForce(float additionalForce)
+    {
+        var movementForce = movementDirection.forward.normalized *
+            speedMultiplier * additionalForce * movementSpeed * Time.fixedDeltaTime;
+
+        movementForce = new Vector3(movementForce.x, 0 , movementForce.z);
+
+        return movementForce;
+    }
+    
+    
     #endregion
 
 
