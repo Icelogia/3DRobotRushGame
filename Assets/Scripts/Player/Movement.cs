@@ -9,9 +9,15 @@ public class Movement : NetworkBehaviour
 
     [Header("Movement Parametres")]
     [SyncVar]
-    [SerializeField] private float movementSpeed = 1;
+    [SerializeField] private float forwardMovementSpeed = 1;
+    [SyncVar]
+    [SerializeField] private float backwardMovementSpeed = 1;
+    [SyncVar]
+    private float movementSpeed = 1;
     [SyncVar]
     [SerializeField] private float rotationSpeed = 1;
+
+    private bool isMoving = false;
 
     private float verticalMovement;
     private float rotationMovement;
@@ -28,15 +34,24 @@ public class Movement : NetworkBehaviour
 
         verticalMovement = Input.GetAxis("Vertical");
         rotationMovement = Input.GetAxis("Horizontal");
-        
+
+        movementSpeed = verticalMovement > 0 ? forwardMovementSpeed : backwardMovementSpeed;
+
         Move(verticalMovement);
-        Rotate(rotationMovement);
+
+        isMoving = Mathf.Abs(rb.velocity.x) > 0.4 || Mathf.Abs(rb.velocity.z) > 0.4;
+
+        rotationMovement *= isMoving ? 1 : -1;
+
+        RpcRotate(rotationMovement);
     }
 
-    [Client]
-    private void Rotate(float rotationMovement)
+    [ClientRpc]
+    public void RpcRotate(float rotationMovement)
     {
-        if (Mathf.Abs(rb.velocity.x) > 0.4 || Mathf.Abs(rb.velocity.z) > 0.4)
+        if (!isLocalPlayer) { return; }
+
+        if (isMoving)
         {
             var angle = new Vector3(0.0f, rotationMovement * rotationSpeed);
             trans.Rotate(angle * speedMultiplier * Time.fixedDeltaTime);
@@ -47,17 +62,18 @@ public class Movement : NetworkBehaviour
     private void Move(float verticalMovement)
     {
         var movement = MovementForce(verticalMovement);
+
         rb.AddForce(movement);
     }
 
     [ClientRpc]
-    public void SlowDown(float slowDownForce)
+    public void RpcAddForce(float force)
     {
         if(!isLocalPlayer) { return; }
 
-        if (Mathf.Abs(rb.velocity.x) > 0.4 || Mathf.Abs(rb.velocity.z) > 0.4)
+        if (isMoving)
         {
-            var movementAdditionalForce = MovementForce(-slowDownForce) * verticalMovement;
+            var movementAdditionalForce = MovementForce(force) * verticalMovement;
 
             rb.AddForce(movementAdditionalForce);
         }
