@@ -9,7 +9,7 @@ public class DamageObstacle : NetworkBehaviour, IObstacle
     virtual protected void DealDamageTo(Health player){}
 
     [ServerCallback]
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         Health player;
 
