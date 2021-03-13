@@ -112,6 +112,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   effectPrefab: {fileID: 8112012704907303777, guid: 1406b6ecd7b929a468ae62503538f6b4, type: 3}
+  lightColor: {r: 0.36850303, g: 0.37830102, b: 0.46226418, a: 1}
   hpToRegenerate: 5
 --- !u!114 &3021315364875963374
 MonoBehaviour:

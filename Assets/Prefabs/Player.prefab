@@ -116,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  player: {fileID: 3593481773707531222}
   health: {fileID: 7730837511138342713}
   inputControl: {fileID: 2503159628587819325}
 --- !u!114 &1442647133264912674

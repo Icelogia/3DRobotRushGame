@@ -5,6 +5,7 @@ using Mirror;
 public class Orb : NetworkBehaviour
 {
     [SerializeField] private GameObject effectPrefab = null;
+    [SerializeField] private Color lightColor;
 
     [SerializeField] private int hpToRegenerate = 10;
 
@@ -15,7 +16,7 @@ public class Orb : NetworkBehaviour
 
         if (other.gameObject.TryGetComponent<Abilities>(out player))
         {
-            player.SetEffectPrefab(effectPrefab);
+            player.SetEffectPrefab(effectPrefab, lightColor);
 
             Health health = player.GetComponent<Health>();
 

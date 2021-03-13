@@ -5,6 +5,7 @@ public class Abilities : NetworkBehaviour
 {
     private GameObject effectPrefab = null;
 
+    [SerializeField] private Player player = null;
     [SerializeField] private Health health = null;
     [SerializeField] private PlayerInputControl inputControl = null;
 
@@ -15,6 +16,7 @@ public class Abilities : NetworkBehaviour
 
         if (inputControl.ability)
         {
+            player.CmdSetEmmisionColorOnPlayer(Color.white);
             CmdUsingEffect();
         }
     }
@@ -45,10 +47,12 @@ public class Abilities : NetworkBehaviour
     
 
     [Client]
-    public void SetEffectPrefab(GameObject prefab)
+    public void SetEffectPrefab(GameObject prefab, Color lightColor)
     {
-        if (effectPrefab == null)
-            effectPrefab = prefab;
+        if (effectPrefab != null) { return; }
+
+        player.CmdSetEmmisionColorOnPlayer(lightColor);
+        effectPrefab = prefab;
     }
   
 }

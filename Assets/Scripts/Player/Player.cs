@@ -51,4 +51,17 @@ public class Player : NetworkBehaviour
     {
         playersMesh.material.color = color;
     }
+
+    [Command]
+    public void CmdSetEmmisionColorOnPlayer(Color color)
+    {
+        playersMesh.materials[1].SetColor("Color_F3EA4B39", color);
+        RpcSetEmissionColorOnPlayer(color);
+    }
+
+    [ClientRpc]
+    public void RpcSetEmissionColorOnPlayer(Color color)
+    {
+        playersMesh.materials[1].SetColor("Color_F3EA4B39", color);
+    }
 }
