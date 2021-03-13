@@ -3,16 +3,17 @@ using Mirror;
 
 public class Abilities : NetworkBehaviour
 {
-    [SerializeField] private GameObject effectPrefab = null;
+    private GameObject effectPrefab = null;
 
     [SerializeField] private Health health = null;
+    [SerializeField] private PlayerInputControl inputControl = null;
 
     [ClientCallback]
     private void Update()
     {
         if(!isLocalPlayer) { return; }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (inputControl.ability)
         {
             CmdUsingEffect();
         }

@@ -4,8 +4,9 @@ using System;
 
 public class Movement : NetworkBehaviour
 {
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private Transform trans;
+    [SerializeField] private Rigidbody rb = null;
+    [SerializeField] private Transform trans = null;
+    [SerializeField] private PlayerInputControl inputControl = null;
 
     [Header("Movement Parametres")]
     [SyncVar]
@@ -17,7 +18,7 @@ public class Movement : NetworkBehaviour
     [SyncVar]
     [SerializeField] private float rotationSpeed = 1;
 
-    private bool isMoving = false;
+    public bool isMoving = false;
 
     private float verticalMovement;
     private float rotationMovement;
@@ -32,8 +33,8 @@ public class Movement : NetworkBehaviour
     {
         if (!hasAuthority) { return; }
 
-        verticalMovement = Input.GetAxis("Vertical");
-        rotationMovement = Input.GetAxis("Horizontal");
+        verticalMovement = inputControl.verticalMovement;
+        rotationMovement = inputControl.rotationMovement;
 
         movementSpeed = verticalMovement > 0 ? forwardMovementSpeed : backwardMovementSpeed;
 
@@ -53,7 +54,7 @@ public class Movement : NetworkBehaviour
 
         if (isMoving)
         {
-            var angle = new Vector3(0.0f, rotationMovement * rotationSpeed);
+            var angle = new Vector3(0.0f, rotationMovement * verticalMovement * rotationSpeed);
             trans.Rotate(angle * speedMultiplier * Time.fixedDeltaTime);
         }
     }

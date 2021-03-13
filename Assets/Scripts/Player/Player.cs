@@ -51,7 +51,4 @@ public class Player : NetworkBehaviour
     {
         playersMesh.material.color = color;
     }
-
-
-
 }
