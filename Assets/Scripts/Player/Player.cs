@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using Mirror;
 using System.Collections;
-using Cinemachine;
 
 public class Player : NetworkBehaviour
 {
-    private CinemachineVirtualCamera mainCamera = null;
+    
 
     [SerializeField] private Renderer playersMesh;
 
@@ -18,15 +17,6 @@ public class Player : NetworkBehaviour
         if(!hasAuthority) { return; }
 
         StartCoroutine("SetColor");//Waiting for all players to join game scene to set colors
-        SetCamera();
-    }
-
-    [Client]
-    private void SetCamera()
-    {
-        mainCamera = FindObjectOfType<CinemachineVirtualCamera>();
-        mainCamera.Follow = this.transform;
-        mainCamera.LookAt = this.transform;
     }
 
     [Client]
