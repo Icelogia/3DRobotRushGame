@@ -1,21 +1,26 @@
 ﻿using UnityEngine;
 using Cinemachine;
+using Mirror;
 
-public class CameraControl : MonoBehaviour
+public class CameraControl : NetworkBehaviour
 {
-    private CinemachineVirtualCamera mainCamera = null;
+    [SerializeField]private CinemachineVirtualCamera mainCamera = null;
     private Transform cameraTarget = null;
     [SerializeField] private PlayerInputControl inputControl = null;
     [SerializeField] private float rotationSpeed = 100f;
 
+    [ClientCallback]
     private void Start()
     {
+        if(!hasAuthority) { return; }
+
         GameObject cameraTar = new GameObject("Camera Target");
         cameraTarget = cameraTar.transform;
 
         SetCamera();
     }
 
+    [Client]
     private void SetCamera()
     {
         mainCamera = FindObjectOfType<CinemachineVirtualCamera>();
@@ -23,12 +28,16 @@ public class CameraControl : MonoBehaviour
         mainCamera.LookAt = cameraTarget;
     }
 
+    [ClientCallback]
     private void Update()
     {
+        if (!hasAuthority) { return; }
+
         FollowMainTarget();
         ControlCamera();
     }
 
+    [Client]
     private void ControlCamera()
     {
         float mouseMovement = inputControl.mouseMovement;
@@ -40,6 +49,7 @@ public class CameraControl : MonoBehaviour
         }
     }
 
+    [Client]
     private void FollowMainTarget()
     {
         cameraTarget.position = transform.position; 

@@ -1,27 +1,40 @@
 ﻿using UnityEngine;
 using Mirror;
+using System.Collections.Generic;
 
 public class PlatformController : NetworkBehaviour
 {
+    [SerializeField] private int amountOfPlatformsToFall = 0;
+
     [Header("Platforms")]
-    [SerializeField] private Animator[] platformsAnimator = null;
+    private Animator[] platformsAnimator = null;
+    private List<int> isInAnimation = new List<int>();
 
     [Header("Parametres")]
     [SerializeField] private float timeBtwPlatformsFalling = 0;
     private float currentTime = 0;
 
     [ServerCallback]
+    private void Start()
+    {
+        platformsAnimator = GetComponentsInChildren<Animator>();
+    }
+
+    [ServerCallback]
     private void Update()
     {
         if (timeBtwPlatformsFalling < currentTime)
         {
-            int i = Random.Range(0, platformsAnimator.Length);
-            int j = Random.Range(0, platformsAnimator.Length);
+            isInAnimation.Clear();
 
-            platformsAnimator[i].Play("Fall");
-            if (i != j)
+            for (int i = 0; i < amountOfPlatformsToFall; i++)
             {
-                platformsAnimator[j].Play("Fall");
+                int j = Random.Range(0, platformsAnimator.Length);
+                if (!isInAnimation.Contains(j))
+                {
+                    platformsAnimator[j].Play("Fall");
+                    isInAnimation.Add(j);
+                } 
             }
 
             currentTime = 0;

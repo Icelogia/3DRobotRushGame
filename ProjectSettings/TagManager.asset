@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Lobby Panel
   - HP Slider
+  - Platform
   layers:
   - Default
   - TransparentFX

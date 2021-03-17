@@ -32,6 +32,7 @@ public class Movement : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!hasAuthority) { return; }
+        if (!isLocalPlayer) { return; }
 
         verticalMovement = inputControl.verticalMovement;
         rotationMovement = inputControl.rotationMovement;
@@ -44,11 +45,22 @@ public class Movement : NetworkBehaviour
 
         rotationMovement *= isMoving ? 1 : -1;
 
-        RpcRotate(rotationMovement);
+        ClientRotate(rotationMovement);
+    }
+
+    [Client]
+    private void ClientRotate(float rotationMovement)
+    {
+        Rotate(rotationMovement);
     }
 
     [ClientRpc]
     public void RpcRotate(float rotationMovement)
+    {
+        Rotate(rotationMovement);
+    }
+
+    private void Rotate(float rotationMovement)
     {
         if (!isLocalPlayer) { return; }
 

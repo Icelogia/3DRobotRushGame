@@ -4824,7 +4824,7 @@ GameObject:
   - component: {fileID: 1575341393}
   - component: {fileID: 1575341392}
   m_Layer: 0
-  m_Name: Electric Center (1)
+  m_Name: Electric Smudge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
