@@ -8,6 +8,12 @@ public class MovementObstacle : NetworkBehaviour, IObstacle
     [ServerCallback]
     private void OnTriggerStay(Collider other)
     {
+        ChangePlayerMovement(other);
+    }
+
+    [Server]
+    protected void ChangePlayerMovement(Collider other)
+    {
         Movement player;
 
         if (other.gameObject.TryGetComponent<Movement>(out player))
