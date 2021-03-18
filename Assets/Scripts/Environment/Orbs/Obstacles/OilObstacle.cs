@@ -25,7 +25,7 @@ public class OilObstacle : MovementObstacle
     [ServerCallback]
     private void OnTriggerEnter(Collider other)
     {
-        Player player = other.GetComponent<Player>();
+        PlayerEffectsController player = other.GetComponent<PlayerEffectsController>();
         player.TurnTrailsOn();
     }
 }
