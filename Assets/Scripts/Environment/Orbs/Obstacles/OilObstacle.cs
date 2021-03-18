@@ -21,4 +21,11 @@ public class OilObstacle : MovementObstacle
         int rotMulti = rotationRightMultiplier == 1 ? 1 : -1;
         player.RpcRotate(rotMulti);
     }
+
+    [ServerCallback]
+    private void OnTriggerEnter(Collider other)
+    {
+        Player player = other.GetComponent<Player>();
+        player.TurnTrailsOn();
+    }
 }

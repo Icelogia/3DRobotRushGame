@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Mirror;
-using System;
+using System.Collections;
 
 public class Movement : NetworkBehaviour
 {
@@ -18,34 +18,83 @@ public class Movement : NetworkBehaviour
     [SyncVar]
     [SerializeField] private float rotationSpeed = 1;
 
+    [SyncVar]
+    [SerializeField] private float chargeSpeed = 1;
+    [SyncVar]
+    [SerializeField] private bool canCharge = false;
+    [SyncVar]
+    [SerializeField] private float chargeCooldown = 1;
+    [SyncVar]
+    private float currentChargeTime = 0;
+    [SyncVar]
+    private float chargeBoost = 1;
+
     public bool isMoving = false;
 
     private float verticalMovement;
     private float rotationMovement;
+    private bool chargeInput;
 
     private const float speedMultiplier = 100;
 
     [SerializeField] private Transform movementDirection = null;
 
-    #region Client
     [ClientCallback]
-    private void FixedUpdate()
+    private void Update()
     {
         if (!hasAuthority) { return; }
         if (!isLocalPlayer) { return; }
 
         verticalMovement = inputControl.verticalMovement;
         rotationMovement = inputControl.rotationMovement;
+        chargeInput = inputControl.charge;
+    }
+
+    [ClientCallback]
+    private void FixedUpdate()
+    {
+        if (!hasAuthority) { return; }
+        if (!isLocalPlayer) { return; }
 
         movementSpeed = verticalMovement > 0 ? forwardMovementSpeed : backwardMovementSpeed;
-
         Move(verticalMovement);
 
         isMoving = Mathf.Abs(rb.velocity.x) > 0.4 || Mathf.Abs(rb.velocity.z) > 0.4;
-
         rotationMovement *= isMoving ? 1 : -1;
-
         ClientRotate(rotationMovement);
+
+        Charge();
+    }
+
+    [Client]
+    private void Charge()
+    {
+        SetCharge();
+        if (canCharge && chargeInput)
+        {
+            canCharge = false;
+            currentChargeTime = 0;
+            StartCoroutine(ChargeBoost());
+        }
+    }
+
+    [Client]
+    private void SetCharge()
+    {
+        if(currentChargeTime >= chargeCooldown)
+        {
+            canCharge = true;
+        }
+
+        currentChargeTime += Time.fixedDeltaTime;
+    }
+
+    private IEnumerator ChargeBoost()
+    {
+        chargeBoost = chargeSpeed;
+        yield return new WaitForSeconds(2);
+        chargeBoost = 1;
+
     }
 
     [Client]
@@ -74,9 +123,12 @@ public class Movement : NetworkBehaviour
     [Client]
     private void Move(float verticalMovement)
     {
-        var movement = MovementForce(verticalMovement);
+        if (rb.velocity.magnitude <= movementSpeed * chargeBoost)
+        {
+            var movement = MovementForce(verticalMovement);
 
-        rb.AddForce(movement);
+            rb.AddForce(movement);
+        }
     }
 
     [ClientRpc]
@@ -96,15 +148,11 @@ public class Movement : NetworkBehaviour
     private Vector3 MovementForce(float additionalForce)
     {
         var movementForce = movementDirection.forward.normalized *
-            speedMultiplier * additionalForce * movementSpeed * Time.fixedDeltaTime;
+            speedMultiplier * additionalForce * movementSpeed * chargeBoost * Time.fixedDeltaTime;
 
         movementForce = new Vector3(movementForce.x, 0 , movementForce.z);
 
         return movementForce;
     }
     
-    
-    #endregion
-
-
 }

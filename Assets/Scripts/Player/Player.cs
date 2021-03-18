@@ -7,6 +7,7 @@ public class Player : NetworkBehaviour
     
 
     [SerializeField] private Renderer playersMesh;
+    [SerializeField] private TrailRenderer[] trails = null;
 
     [SyncVar]
     private Color playerColor;
@@ -54,4 +55,37 @@ public class Player : NetworkBehaviour
     {
         playersMesh.materials[1].SetColor("Color_F3EA4B39", color);
     }
+
+    #region Trails
+    [Server]
+    public void TurnTrailsOn()
+    {
+        ChangeTrailsState(true);
+        StartCoroutine(TurnTrailsOff());
+
+        RpcTurnTrailsOn();
+    }
+
+    [ClientRpc]
+    public void RpcTurnTrailsOn()
+    {
+        ChangeTrailsState(true);
+
+        StartCoroutine(TurnTrailsOff());
+    }
+
+    private void ChangeTrailsState(bool state)
+    {
+        for (int i = 0; i < trails.Length; i++)
+        {
+            trails[i].emitting = state;
+        }
+    }
+    private IEnumerator TurnTrailsOff()
+    {
+        yield return new WaitForSeconds(3);
+
+        ChangeTrailsState(false);
+    }
+    #endregion Trails
 }

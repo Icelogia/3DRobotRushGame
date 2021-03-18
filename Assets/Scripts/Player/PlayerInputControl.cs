@@ -17,6 +17,7 @@ public class PlayerInputControl : NetworkBehaviour
         verticalMovement = Input.GetAxis("Vertical");
         rotationMovement = Input.GetAxis("Horizontal");
         ability = Input.GetKeyDown(KeyCode.Space);
+        charge = Input.GetKeyDown(KeyCode.LeftShift);
         mouseMovement = Input.GetAxis("Mouse X");
     }
 
