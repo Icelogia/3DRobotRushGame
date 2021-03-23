@@ -4,9 +4,11 @@ using System.Collections;
 
 public class Movement : NetworkBehaviour
 {
+    [Header("Main Parametres")]
     [SerializeField] private Rigidbody rb = null;
     [SerializeField] private Transform trans = null;
     [SerializeField] private PlayerInputControl inputControl = null;
+    [SerializeField] private Transform movementDirection = null;
 
     [Header("Movement Parametres")]
     [SyncVar]
@@ -18,6 +20,7 @@ public class Movement : NetworkBehaviour
     [SyncVar]
     [SerializeField] private float rotationSpeed = 1;
 
+    [Header("Charge Parametres")]
     [SyncVar]
     [SerializeField] private float chargeSpeed = 1;
     [SyncVar]
@@ -29,6 +32,8 @@ public class Movement : NetworkBehaviour
     [SyncVar]
     private float chargeBoost = 1;
 
+
+
     public bool isMoving = false;
 
     private float verticalMovement;
@@ -36,8 +41,6 @@ public class Movement : NetworkBehaviour
     private bool chargeInput;
 
     private const float speedMultiplier = 100;
-
-    [SerializeField] private Transform movementDirection = null;
 
     [ClientCallback]
     private void Update()
@@ -155,4 +158,14 @@ public class Movement : NetworkBehaviour
         return movementForce;
     }
     
+    [TargetRpc]
+    public void TRpcDrown(NetworkConnection target)
+    {
+        if(rb.velocity.y < -0.1f)
+        {
+            rb.velocity = Vector3.zero;
+        }
+        Vector3 buoyancy = new Vector3(-Physics.gravity.x, -Physics.gravity.y - 1f, -Physics.gravity.z);
+        rb.AddForce(buoyancy);
+    }
 }
