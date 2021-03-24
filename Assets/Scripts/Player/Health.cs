@@ -60,4 +60,10 @@ public class Health : NetworkBehaviour
     {
         currentHealth = hp;
     }
+
+    [TargetRpc]
+    public void TRpcZeroHealth(NetworkConnection target)
+    {
+        currentHealth = 0;
+    }
 }

@@ -452,6 +452,7 @@ MonoBehaviour:
   rb: {fileID: -1111222983037325459}
   trans: {fileID: 5131378748824570244}
   inputControl: {fileID: 2503159628587819325}
+  movementDirection: {fileID: 5131378747593921926}
   forwardMovementSpeed: 6
   backwardMovementSpeed: 4
   rotationSpeed: 0.8
@@ -459,7 +460,6 @@ MonoBehaviour:
   canCharge: 0
   chargeCooldown: 15
   isMoving: 0
-  movementDirection: {fileID: 5131378747593921926}
 --- !u!114 &7730837511138342713
 MonoBehaviour:
   m_ObjectHideFlags: 0

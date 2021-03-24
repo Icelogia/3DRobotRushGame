@@ -11,6 +11,9 @@ public class Lava : NetworkBehaviour
         if (player != null)
         {
             Movement playerMovement = other.GetComponent<Movement>();
+            Health playerHealth = other.GetComponent<Health>();
+
+            playerHealth.TRpcZeroHealth(player.connectionToClient);
             playerMovement.TRpcDrown(player.connectionToClient);
         }
     }
