@@ -2,6 +2,7 @@
 using Mirror;
 using UnityEngine.UI;
 using System;
+using MainMenu;
 
 public class Health : NetworkBehaviour
 {
@@ -27,22 +28,35 @@ public class Health : NetworkBehaviour
     [ClientCallback]
     private void FixedUpdate()
     {
-        if(!hasAuthority) { return; }
+        if (!hasAuthority) { return; }
 
-        if(isUpdatingSlider)
+        if (isUpdatingSlider)
         {
             CmdDecreaseHealth();
             UpdateSlider();
         }
 
+        Die();
+    }
+
+    [Client]
+    private void Die()
+    {
         if (currentHealth <= 0 && isUpdatingSlider)
         {
             isUpdatingSlider = false;
-            if(Death != null)
+            if (Death != null)
             {
+                CmdSendNickToRanking();
                 Death.Invoke();
             }
         }
+    }
+    [Command]
+    private void CmdSendNickToRanking()
+    {
+        Ranking ranking = FindObjectOfType<Ranking>();
+        ranking.ServerAddToRanking(PlayerNameInput.Nick);
     }
 
     [Command]
