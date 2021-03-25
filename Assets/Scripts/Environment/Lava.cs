@@ -13,7 +13,7 @@ public class Lava : NetworkBehaviour
             Movement playerMovement = other.GetComponent<Movement>();
             Health playerHealth = other.GetComponent<Health>();
 
-            playerHealth.TRpcZeroHealth(player.connectionToClient);
+            playerHealth.ServerZeroHealth();
             playerMovement.TRpcDrown(player.connectionToClient);
         }
     }

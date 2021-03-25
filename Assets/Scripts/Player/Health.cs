@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
-using System.Collections;
+using System;
 
 public class Health : NetworkBehaviour
 {
@@ -9,8 +9,11 @@ public class Health : NetworkBehaviour
     [SerializeField] private int health = 100;
     [SyncVar]
     private float currentHealth = 0;
+    private bool isUpdatingSlider = true;
 
     private Slider healthSlider = null;
+
+    public event Action Death;
 
     [ClientCallback]
     private void Start()
@@ -26,8 +29,20 @@ public class Health : NetworkBehaviour
     {
         if(!hasAuthority) { return; }
 
-        CmdDecreaseHealth();
-        UpdateSlider();
+        if(isUpdatingSlider)
+        {
+            CmdDecreaseHealth();
+            UpdateSlider();
+        }
+
+        if (currentHealth <= 0 && isUpdatingSlider)
+        {
+            isUpdatingSlider = false;
+            if(Death != null)
+            {
+                Death.Invoke();
+            }
+        }
     }
 
     [Command]
@@ -36,6 +51,7 @@ public class Health : NetworkBehaviour
         currentHealth -= Time.fixedDeltaTime;
     }
 
+    [Client]
     private void UpdateSlider()
     {
         healthSlider.value = currentHealth / health;
@@ -61,9 +77,10 @@ public class Health : NetworkBehaviour
         currentHealth = hp;
     }
 
-    [TargetRpc]
-    public void TRpcZeroHealth(NetworkConnection target)
+    [Server]
+    public void ServerZeroHealth()
     {
-        currentHealth = 0;
+        if(currentHealth > 0)
+            currentHealth = 0;
     }
 }
