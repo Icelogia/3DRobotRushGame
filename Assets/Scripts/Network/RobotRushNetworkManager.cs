@@ -7,8 +7,6 @@ public class RobotRushNetworkManager : NetworkRoomManager
 {
     private bool isGameInProgress = false;
 
-    
-
     #region Server
     public override void OnServerConnect(NetworkConnection conn)
     {

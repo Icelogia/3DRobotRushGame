@@ -36,6 +36,9 @@ public class Player : NetworkBehaviour
     {
         this.nick = nick;
         RpcSetNick(nick);
+
+        Ranking ranking = FindObjectOfType<Ranking>();
+        ranking.ServerAddToPlayerNamesList(nick);
     }
 
     [ClientRpc]
@@ -80,4 +83,12 @@ public class Player : NetworkBehaviour
         playersMesh.materials[1].SetColor("Color_F3EA4B39", color);
     }
     #endregion Materials
+
+
+    public override void OnStopServer()
+    {
+        Ranking ranking = FindObjectOfType<Ranking>();
+        ranking.ServerRemoveFromPlayerNamesList(nick);
+        base.OnStopServer();
+    }
 }

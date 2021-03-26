@@ -14,6 +14,7 @@ public class CameraControl : NetworkBehaviour
     private int currentWatchedPlayer = 0;
 
     readonly private static List<Transform> playersTransform = new List<Transform>();
+    private Transform lastCameraTarget = null;
 
     [ClientCallback]
     private void Start()
@@ -27,6 +28,7 @@ public class CameraControl : NetworkBehaviour
 
         GameObject cameraTar = new GameObject("Camera Target");
         cameraTarget = cameraTar.transform;
+        lastCameraTarget = GameObject.FindGameObjectWithTag("Camera Last Target").transform;
 
         SetCamera();
 
@@ -112,7 +114,11 @@ public class CameraControl : NetworkBehaviour
     [Client]
     private void ChangeMainTargetWithDeath()
     {
-        if(playersTransform.Count <= 1) { return; }
+        if(playersTransform.Count <= 1) 
+        {
+            cameraTarget = lastCameraTarget;
+            return;
+        }
 
         foreach(Transform playerObjTrans in playersTransform)
         {
