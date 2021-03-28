@@ -38,4 +38,17 @@ public class RankingList : NetworkBehaviour
 
         }
     }
+
+    [Server]
+    public void LeaveToLobby()
+    {
+        RobotRushNetworkManager.singleton.ServerChangeScene("Lobby");
+    }
+
+    [Client]
+    public void LeaveGame()
+    {
+        RobotRushNetworkManager.singleton.StopClient();
+    }
+
 }
