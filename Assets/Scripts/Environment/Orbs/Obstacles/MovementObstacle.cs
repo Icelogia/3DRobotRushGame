@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Mirror;
-public class MovementObstacle : NetworkBehaviour, IObstacle
+public class MovementObstacle : OrbElement
 {
     [Server]
     virtual protected void ChangeMovementOf(Movement player) { }

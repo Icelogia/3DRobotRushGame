@@ -270,6 +270,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 560092991}
     m_Modifications:
+    - target: {fileID: 426294552, guid: 1406b6ecd7b929a468ae62503538f6b4, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4694082960668776634, guid: 1406b6ecd7b929a468ae62503538f6b4, type: 3}
       propertyPath: sceneId
       value: 1130842530
@@ -280,7 +284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8112012704907303777, guid: 1406b6ecd7b929a468ae62503538f6b4, type: 3}
       propertyPath: m_Name
-      value: Smoke Grande (1)
+      value: Smoke Grande
       objectReference: {fileID: 0}
     - target: {fileID: 8112012704907303790, guid: 1406b6ecd7b929a468ae62503538f6b4, type: 3}
       propertyPath: m_RootOrder
@@ -1144,14 +1148,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 560092991}
     m_Modifications:
-    - target: {fileID: 2026786966, guid: a0829d1cbc07e034fb07eee846e08da7, type: 3}
-      propertyPath: sceneId
-      value: 1947729907
-      objectReference: {fileID: 0}
-    - target: {fileID: 2026786966, guid: a0829d1cbc07e034fb07eee846e08da7, type: 3}
-      propertyPath: m_AssetId
-      value: a0829d1cbc07e034fb07eee846e08da7
-      objectReference: {fileID: 0}
     - target: {fileID: 1980098820823944786, guid: a0829d1cbc07e034fb07eee846e08da7, type: 3}
       propertyPath: sceneId
       value: 4030647976

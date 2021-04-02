@@ -16,6 +16,7 @@ public class CameraControl : NetworkBehaviour
     readonly private static List<Transform> playersTransform = new List<Transform>();
     private Transform lastCameraTarget = null;
 
+
     [ClientCallback]
     private void Start()
     {
@@ -31,7 +32,6 @@ public class CameraControl : NetworkBehaviour
         lastCameraTarget = GameObject.FindGameObjectWithTag("Camera Last Target").transform;
 
         SetCamera();
-
         this.GetComponent<Health>().Death += ChangeMainTargetWithDeath;
     }
 

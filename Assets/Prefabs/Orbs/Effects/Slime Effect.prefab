@@ -65,6 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  lifeTime: 5
   slowDownForce: 0.9
   mainBone: {fileID: 2783970857346798990}
 --- !u!135 &4522227731823667615

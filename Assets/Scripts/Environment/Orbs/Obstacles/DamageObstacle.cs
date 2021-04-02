@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using Mirror;
 
-public class DamageObstacle : NetworkBehaviour, IObstacle
+public class DamageObstacle : OrbElement
 {
     [SerializeField] protected int damage = 5;
 
     [Server]
     virtual protected void DealDamageTo(Health player){}
+    
 
     [ServerCallback]
     private void OnTriggerStay(Collider other)
@@ -19,5 +20,4 @@ public class DamageObstacle : NetworkBehaviour, IObstacle
         }
     }
 
-    
 }

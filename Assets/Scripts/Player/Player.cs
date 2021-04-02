@@ -5,8 +5,6 @@ using MainMenu;
 
 public class Player : NetworkBehaviour
 {
-    
-
     [SerializeField] private Renderer playersMesh;
 
     [SyncVar]
@@ -35,6 +33,7 @@ public class Player : NetworkBehaviour
     public void CmdSetNick(string nick)
     {
         this.nick = nick;
+
         RpcSetNick(nick);
 
         Ranking ranking = FindObjectOfType<Ranking>();

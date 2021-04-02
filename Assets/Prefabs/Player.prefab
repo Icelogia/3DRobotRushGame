@@ -489,6 +489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  nicknameText: {fileID: 0}
   playersMesh: {fileID: 2934369096149304619}
 --- !u!114 &8576758095133582165
 MonoBehaviour:
@@ -504,7 +505,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  mainCamera: {fileID: 0}
   inputControl: {fileID: 2503159628587819325}
   rotationSpeed: 10
 --- !u!114 &1614477390033540535

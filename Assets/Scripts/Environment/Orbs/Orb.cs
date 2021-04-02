@@ -2,7 +2,7 @@
 using Mirror;
 
 [RequireComponent(typeof(Collider))]
-public class Orb : NetworkBehaviour
+public class Orb : OrbElement
 {
     [SerializeField] private GameObject effectPrefab = null;
     [SerializeField] private Color lightColor;
