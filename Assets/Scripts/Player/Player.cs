@@ -2,9 +2,11 @@
 using Mirror;
 using System.Collections;
 using MainMenu;
+using UnityEngine.UI;
 
 public class Player : NetworkBehaviour
 {
+    [SerializeField] private Text nicknameObj = null;
     [SerializeField] private Renderer playersMesh;
 
     [SyncVar]
@@ -27,7 +29,7 @@ public class Player : NetworkBehaviour
         yield return new WaitForSeconds(1);
         nick = PlayerNameInput.Nick;
         CmdSetNick(nick);
-        //Set Nick over player
+        nicknameObj.text = nick;
     }
     [Command]
     public void CmdSetNick(string nick)
@@ -38,12 +40,14 @@ public class Player : NetworkBehaviour
 
         Ranking ranking = FindObjectOfType<Ranking>();
         ranking.ServerAddToPlayerNamesList(nick);
+        nicknameObj.text = nick;
     }
 
     [ClientRpc]
     public void RpcSetNick(string nick)
     {
         this.nick = nick;
+        nicknameObj.text = nick;
     }
     #endregion Nick
 
