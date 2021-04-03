@@ -6,6 +6,7 @@ using Mirror;
 public class RankingList : NetworkBehaviour
 {
     [SerializeField] private GameObject rankingPanel = null;
+    [SerializeField] private GameObject leaveToLobbyButton = null;
     [SerializeField] private GameObject rankingPanelPrefab = null;
     [SerializeField] private RectTransform rankingPanelList = null;
     [SyncVar]
@@ -37,12 +38,16 @@ public class RankingList : NetworkBehaviour
             textPanel.text = (i + 1) + ":  " + ranking[i];
 
         }
+
+        if(!isServer) { return; }
+
+        leaveToLobbyButton.SetActive(true);
     }
 
-    [Server]
     public void LeaveToLobby()
     {
-        RobotRushNetworkManager.singleton.ServerChangeScene("Lobby");
+        if(isServer)
+            RobotRushNetworkManager.singleton.ServerChangeScene("Lobby");
     }
 
     [Client]
