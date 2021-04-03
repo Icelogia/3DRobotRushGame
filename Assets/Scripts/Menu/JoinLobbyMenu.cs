@@ -1,21 +1,27 @@
 ﻿using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
+using System.Net.Sockets;
 
 namespace MainMenu
 {
     public class JoinLobbyMenu : MonoBehaviour
     {
-        [SerializeField] private Button joinButton = null;
         [SerializeField] private InputField ipAddressField = null;
 
         public void JoinGame()
         {
             string address = ipAddressField.text;
             RobotRushNetworkManager.singleton.networkAddress = address;
-            RobotRushNetworkManager.singleton.StartClient();
-
-            joinButton.interactable = false;
+            try
+            {
+                RobotRushNetworkManager.singleton.StartClient();
+            }
+            catch(SocketException)
+            {
+                RobotRushNetworkManager.singleton.StopClient();
+            }
+            
         }
 
     }

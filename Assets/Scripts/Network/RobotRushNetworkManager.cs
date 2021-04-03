@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using Mirror;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 
 public class RobotRushNetworkManager : NetworkRoomManager
 {
