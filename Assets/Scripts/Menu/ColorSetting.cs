@@ -6,12 +6,22 @@ public class ColorSetting : MonoBehaviour
     [SerializeField] private Color[] colors;
     [SerializeField] private GameObject colorPanel = null;
     public static Color color { get; private set; }
+    public static bool isColorSet { get; private set; }
 
     public static event Action<Color> HandleChangeColor;
 
-    private void Awake()
+    private void Start()
     {
-        color = colors[0];
+        DefaultColorSet();
+    }
+
+    private void DefaultColorSet()
+    {
+        if (!isColorSet)
+        {
+            color = colors[0];
+            isColorSet = true;
+        }
     }
 
     public void OpenColorPanel()
@@ -28,6 +38,7 @@ public class ColorSetting : MonoBehaviour
     {
         color = colors[colorIndex];
         HandleChangeColor?.Invoke(color);
+        isColorSet = true;
         CloseColorPanel();
     }
 }

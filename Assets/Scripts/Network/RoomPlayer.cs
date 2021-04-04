@@ -3,6 +3,7 @@ using Mirror;
 using MainMenu;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class RoomPlayer : NetworkRoomPlayer
 {
@@ -20,7 +21,7 @@ public class RoomPlayer : NetworkRoomPlayer
     [SerializeField] private Image colorImage = null;
 
     [SyncVar]
-    private Color playerColor = Color.red;
+    private Color playerColor = ColorSetting.color;
 
     [SyncVar]
     public string playerName = "Player";
@@ -59,7 +60,7 @@ public class RoomPlayer : NetworkRoomPlayer
     {
         base.OnClientEnterRoom();
         SetPlayerName();
-
+        SetColorOnEnter();
 
         var lobbyPanel = GameObject.FindGameObjectWithTag("Lobby Panel");
         if (lobbyPanel)
@@ -69,6 +70,16 @@ public class RoomPlayer : NetworkRoomPlayer
         else
         {
             Debug.LogError("There is no lobby panel on scene or there is problem with lobbyPanel tag!");
+        }
+    }
+
+    [Client]
+    private void SetColorOnEnter()
+    {
+        if(ColorSetting.isColorSet)
+        {
+            playerColor = ColorSetting.color;
+            CmdChangeColor(playerColor);
         }
     }
 

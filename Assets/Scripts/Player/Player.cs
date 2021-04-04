@@ -87,11 +87,10 @@ public class Player : NetworkBehaviour
     }
     #endregion Materials
 
-
     public override void OnStopServer()
     {
-        Ranking ranking = FindObjectOfType<Ranking>();
-        ranking.ServerRemoveFromPlayerNamesList(nick);
+        //Ranking ranking = FindObjectOfType<Ranking>();
+        //ranking.ServerRemoveFromPlayerNamesList(nick);
         base.OnStopServer();
     }
 }
