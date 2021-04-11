@@ -12,7 +12,6 @@ public class SlimeObstacle : MovementObstacle
 
     private Transform entityTransform = null;
 
-
     [ServerCallback]
     private void Start()
     {
