@@ -1269,6 +1269,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Electric Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 3334935114873508459, guid: a0829d1cbc07e034fb07eee846e08da7, type: 3}
+      propertyPath: MaxDistance
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0829d1cbc07e034fb07eee846e08da7, type: 3}
 --- !u!1001 &3914069198134160365

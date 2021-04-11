@@ -9,6 +9,8 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] private AudioClip staticEngineSound = null;
     [SerializeField] private AudioClip movingEngineSound = null;
 
+    [SerializeField] private AudioSource trailsAudioSource = null;
+
     private void Start()
     {
         audioSource.clip = staticEngineSound;
@@ -19,7 +21,7 @@ public class PlayerAudio : MonoBehaviour
     {
         var movment = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
 
-        if(movment.magnitude > 0.4)
+        if(movment.magnitude > 0.15f)
         {
             ChangeSound(movingEngineSound);
         }
@@ -36,5 +38,10 @@ public class PlayerAudio : MonoBehaviour
             audioSource.clip = engineSound;
             audioSource.Play();
         }
+    }
+
+    public void PlaySlidingSound()
+    {
+        trailsAudioSource.Play();
     }
 }

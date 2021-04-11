@@ -5,6 +5,7 @@ using Mirror;
 public class PlayerEffectsController : NetworkBehaviour
 {
     [SerializeField] private TrailRenderer[] trails = null;
+    [SerializeField] private PlayerAudio playerAudio = null;
 
     [Header("Eating orbs")]
     [SyncVar]
@@ -70,7 +71,8 @@ public class PlayerEffectsController : NetworkBehaviour
     }
     private IEnumerator TurnTrailsOff()
     {
-        yield return new WaitForSeconds(3);
+        playerAudio.PlaySlidingSound();
+        yield return new WaitForSeconds(2.8f);
 
         ChangeTrailsState(false);
     }
