@@ -10,7 +10,6 @@ public class AnimationController : MonoBehaviour
     [SerializeField] Transform backRightWheel = null;
 
     [Header("Movement")]
-    [SerializeField] private Rigidbody rb = null;
     [SerializeField] private PlayerInputControl inputControl = null;
     [SerializeField] private float rotationSpeed = 30f;
     [SerializeField] private float turnRotationAngle = 15f;
