@@ -20,6 +20,8 @@ public class Player : NetworkBehaviour
 
         StartCoroutine("SetColor");//Waiting for all players to join game scene to set colors
         StartCoroutine("SetNick");
+
+        nicknameObj.color = Color.green;
     }
 
     #region Nick
