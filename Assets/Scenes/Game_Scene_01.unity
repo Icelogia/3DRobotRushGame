@@ -548,7 +548,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -710,7 +710,7 @@ AudioSource:
   m_GameObject: {fileID: 559240416}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -6705783999732309818, guid: d0bc787d6a354e4458182403d73e671c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 376df6f006b4bce4ab0187f84e9788a2, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.8

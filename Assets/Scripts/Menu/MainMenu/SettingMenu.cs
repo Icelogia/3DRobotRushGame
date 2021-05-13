@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 public class SettingMenu : MonoBehaviour
 {
     [SerializeField] private GameObject settingPanel = null;
-
     
     [SerializeField] private AudioMixer audioMixer = null;
 
