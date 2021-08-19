@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Mirror;
 
-public class DamageObstacle : OrbElement
+public class DamageObstacle : NetworkBehaviour
 {
     [SerializeField] protected int damage = 5;
 
@@ -10,7 +10,7 @@ public class DamageObstacle : OrbElement
     
 
     [ServerCallback]
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         Health player;
 

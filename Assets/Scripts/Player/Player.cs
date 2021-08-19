@@ -8,6 +8,7 @@ public class Player : NetworkBehaviour
 {
     [SerializeField] private Text nicknameObj = null;
     [SerializeField] private Renderer playersMesh;
+    [SerializeField] private Renderer[] emmisionMeshes;
 
     [SyncVar]
     private Color playerColor;
@@ -78,14 +79,21 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdSetEmmisionColorOnPlayer(Color color)
     {
-        playersMesh.materials[1].SetColor("Color_F3EA4B39", color);
+        for(int i = 0; i < emmisionMeshes.Length; i++)
+        {
+            emmisionMeshes[i].materials[0].SetColor("Color_F3EA4B39", color);
+        }
+    
         RpcSetEmissionColorOnPlayer(color);
     }
 
     [ClientRpc]
     public void RpcSetEmissionColorOnPlayer(Color color)
     {
-        playersMesh.materials[1].SetColor("Color_F3EA4B39", color);
+        for (int i = 0; i < emmisionMeshes.Length; i++)
+        {
+            emmisionMeshes[i].materials[0].SetColor("Color_F3EA4B39", color);
+        }
     }
     #endregion Materials
 

@@ -12,6 +12,7 @@ public class PlatformController : NetworkBehaviour
 
     [Header("Parametres")]
     [SerializeField] private float timeBtwPlatformsFalling = 0;
+    [SerializeField] private bool isPlatformsFallable = true;
     private float currentTime = 0;
 
     [ServerCallback]
@@ -23,6 +24,8 @@ public class PlatformController : NetworkBehaviour
     [ServerCallback]
     private void Update()
     {
+        if (!isPlatformsFallable) { return; }
+
         if (timeBtwPlatformsFalling < currentTime)
         {
             isInAnimation.Clear();

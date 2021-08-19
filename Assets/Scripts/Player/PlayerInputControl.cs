@@ -4,7 +4,7 @@ using Mirror;
 public class PlayerInputControl : NetworkBehaviour
 {
     public float verticalMovement { get; private set; }
-    public float rotationMovement { get; private set; }
+    public float horizontalMovement { get; private set; }
     public bool ability { get; private set; }
     public bool charge { get; private set; }
     public float mouseMovement { get; private set; }
@@ -17,7 +17,7 @@ public class PlayerInputControl : NetworkBehaviour
         if(!hasAuthority) { return; }
 
         verticalMovement = Input.GetAxis("Vertical");
-        rotationMovement = Input.GetAxis("Horizontal");
+        horizontalMovement = Input.GetAxis("Horizontal");
         ability = Input.GetKeyDown(KeyCode.Space);
         charge = Input.GetKeyDown(KeyCode.LeftShift);
         mouseMovement = Input.GetAxis("Mouse X");

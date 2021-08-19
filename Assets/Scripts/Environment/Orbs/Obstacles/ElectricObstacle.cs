@@ -1,26 +1,18 @@
 ﻿using UnityEngine;
 using Mirror;
-using System.Collections;
 
 public class ElectricObstacle : DamageObstacle
 {
     [SyncVar]
-    [SerializeField] float ticTimeDamage = 0.1f;
+    [SerializeField] private float knockbackPower = 20.0f;
 
-    [SyncVar]
-    private float currentTime = 0;
+    [SerializeField] private Transform trans = null;
+
     [Server]
     override protected void DealDamageTo(Health player)
     {
-        int dmg = -this.damage;//to decrease hp
-
-        if(currentTime > ticTimeDamage)
-        {
-            player.CmdUpdateHealth(dmg);
-            currentTime = 0;
-        }
-
-        currentTime += Time.deltaTime;
-        
+        player.CmdUpdateHealth(-this.damage);
+        Vector3 dir = (player.transform.position - trans.position).normalized;
+        player.GetComponent<Movement>().Knockback(dir ,knockbackPower);
     }
 }

@@ -4945,7 +4945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  lifeTime: 10
+  lifeTime: 50
   effectPrefab: {fileID: 1980098820823944788, guid: a0829d1cbc07e034fb07eee846e08da7, type: 3}
   lightColor: {r: 0.58002716, g: 0.084104665, b: 0.8490566, a: 1}
   hpToRegenerate: 5

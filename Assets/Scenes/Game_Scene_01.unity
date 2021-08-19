@@ -2150,6 +2150,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 2108133639109851891, guid: d26e95eee2aebbe4fad47dbf0fddf46e, type: 3}
+      propertyPath: isPlatformsFallable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2108133639600669166, guid: d26e95eee2aebbe4fad47dbf0fddf46e, type: 3}
       propertyPath: sceneId
       value: 2036357230

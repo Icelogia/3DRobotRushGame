@@ -49,7 +49,7 @@ public class Movement : NetworkBehaviour
         if (!isLocalPlayer) { return; }
 
         verticalMovement = inputControl.verticalMovement;
-        rotationMovement = inputControl.rotationMovement;
+        rotationMovement = inputControl.horizontalMovement;
         chargeInput = inputControl.charge;
     }
 
@@ -121,6 +121,13 @@ public class Movement : NetworkBehaviour
             var angle = new Vector3(0.0f, rotationMovement * verticalMovement * rotationSpeed);
             trans.Rotate(angle * speedMultiplier * Time.fixedDeltaTime);
         }
+    }
+
+    [ClientRpc]
+    public void Knockback(Vector3 direction ,float force)
+    {
+        if (!isLocalPlayer) { return; }
+        rb.AddForce(direction * force);
     }
 
     [Client]

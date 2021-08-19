@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
 using Mirror;
+using UnityEngine.VFX;
 
 public class Abilities : NetworkBehaviour
 {
+    [SerializeField]
     private GameObject effectPrefab = null;
 
     [SerializeField] private Player player = null;
     [SerializeField] private Health health = null;
     [SerializeField] private PlayerInputControl inputControl = null;
+    [SerializeField] private AnimationController animController = null;
+    [SerializeField] private VisualEffect electricVfx = null;
 
     [ClientCallback]
     private void Update()
     {
         if(!isLocalPlayer) { return; }
 
-        if (inputControl.ability)
+        if (inputControl.ability && effectPrefab)
         {
             player.CmdSetEmmisionColorOnPlayer(Color.white);
             CmdUsingEffect();
@@ -24,27 +28,40 @@ public class Abilities : NetworkBehaviour
     [Command]
     private void CmdUsingEffect()
     {
-        if (effectPrefab)
+        Debug.Log(this.isServer);
+        ElectricObstacle electric = null;
+        if(effectPrefab && effectPrefab.TryGetComponent<ElectricObstacle>(out electric))
+        {
+            animController.FireElectricAttack();
+            electricVfx.Play();
+            RpcUsingEffect(true);
+        }
+        else if (effectPrefab)
         {
             var effect = Instantiate(effectPrefab, transform.position, transform.rotation);
-            effectPrefab = null;
+         
             NetworkServer.Spawn(effect);
-
-            RpcUsingEffect();
+            RpcUsingEffect(false);
         }
+
+        effectPrefab = null;
     }
 
     [ClientRpc]
-    private void RpcUsingEffect()
+    private void RpcUsingEffect(bool electricAttack)
     {
-        if (effectPrefab)
+        if (electricAttack)
+        {
+            animController.FireElectricAttack();
+            electricVfx.Play();
+        }
+        else if (effectPrefab)
         {
             Instantiate(effectPrefab, transform.position, transform.rotation);
-            effectPrefab = null;
         }
-    }
 
-    
+        effectPrefab = null;
+    }
 
     [Client]
     public void SetEffectPrefab(GameObject prefab, Color lightColor)

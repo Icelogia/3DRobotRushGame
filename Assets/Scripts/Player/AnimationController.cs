@@ -1,65 +1,44 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using UnityEngine;
 
-public class AnimationController : MonoBehaviour
+public class AnimationController : NetworkBehaviour
 {
-    [Header("Vehicle Objects")]
-    [SerializeField] Transform frontWheels = null;
-    [SerializeField] Transform middleWheels = null;
-    [SerializeField] Transform backLeftWheel = null;
-    [SerializeField] Transform backRightWheel = null;
-
-    [Header("Movement")]
+    [Header("Vehicle Components")]
+    [SerializeField] private Transform poligonSphere = null;
+    [SerializeField] private Rigidbody rb = null;
     [SerializeField] private PlayerInputControl inputControl = null;
-    [SerializeField] private float rotationSpeed = 30f;
-    [SerializeField] private float turnRotationAngle = 15f;
+    [SerializeField] private Animator animator = null;
 
+    [Header("Rotation")]
+    [SerializeField] private float rotationSpeed = 15f;
+    private Vector3 rotationVec;
+
+
+    private ElectricObstacle electricAttack = null;
+
+    private float currentSpeed = 0;
+
+    [ClientCallback]
     private void Update()
     {
-        WheelsMovement();
-        WheelsTurn();
+        currentSpeed = rb.velocity.magnitude;
+        animator.SetFloat("speed", currentSpeed);
+
+        RotatePoligonSphere();
     }
 
-    private void WheelsTurn()
+    [Server]
+    public void FireElectricAttack()
     {
-        if(inputControl.rotationMovement > 0.1f)
-        {
-            TurnWheelRotation(-turnRotationAngle);
-        }
-        else if(inputControl.rotationMovement < -0.1f)
-        {
-            TurnWheelRotation(turnRotationAngle);
-        }
-        else
-        {
-            TurnWheelRotation(0);
-        }
+        animator.SetTrigger("shoot");
     }
 
-    private void TurnWheelRotation(float turnRotationAng)
-    {
-        turnRotationAng -= 90;
-        backLeftWheel.localEulerAngles = new Vector3(0, turnRotationAng, backLeftWheel.localEulerAngles.z);
-        backRightWheel.localEulerAngles = new Vector3(0, turnRotationAng, backRightWheel.localEulerAngles.z);
+    [Client]
+    private void RotatePoligonSphere()
+    {   
+        rotationVec = new Vector3(inputControl.verticalMovement, 0.0f, 0.0f);
+        poligonSphere.Rotate(rotationVec * rotationSpeed * currentSpeed);
     }
 
-    private void WheelsMovement()
-    {
-        if (inputControl.verticalMovement > 0.1f)
-        {
-            RotateWheels(-rotationSpeed);
-        }
-        else if (inputControl.verticalMovement < -0.1f)
-        {
-            RotateWheels(rotationSpeed);
-        }
-    }
-
-    private void RotateWheels(float rotationSpd)
-    {
-        frontWheels.Rotate(0f, 0f, rotationSpd * Time.deltaTime);
-        middleWheels.Rotate(0f, 0f, rotationSpd * Time.deltaTime);
-        backLeftWheel.Rotate(0f, 0f, rotationSpd * Time.deltaTime);
-        backRightWheel.Rotate(0f, 0f, rotationSpd * Time.deltaTime);
-    }
 }
