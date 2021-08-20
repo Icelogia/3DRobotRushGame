@@ -53,6 +53,10 @@ public class RankingList : NetworkBehaviour
     [Client]
     public void LeaveGame()
     {
+        if(this.isServer)
+        {
+            RobotRushNetworkManager.singleton.StopHost();
+        }
         RobotRushNetworkManager.singleton.StopClient();
     }
 
